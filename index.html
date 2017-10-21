@@ -17,6 +17,17 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   <title>Alias</title>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-108461867-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-108461867-1');
+</script>
+
+
 </head>
 <style type="text/css">
   body {
@@ -52,7 +63,7 @@ $(document).ready(function() {
 
   ]
   var history = []
-  var TIME_ON_GAME = 60;
+  var TIME_ON_GAME = 90;
   var state = "new"
   var left_time = 0;
   var timer = null;
@@ -99,20 +110,34 @@ $(document).ready(function() {
 
   $('#yesBtn').click(function() {
     history.push({'word': words[index], 'type': 'ok'});
+    ga('send', 'event', 'play', 'yes-click', words[index], 1)
     showWord();
   })
 
   $('#noBtn').click(function() {
     history.push({'word': words[index], 'type': 'no'});
+    ga('send', 'event', 'play', 'no-click', words[index], 0)
     showWord();
   })
+
+  function shuffleMy(a) {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
+}
 
   $('.gameBtn').hide();
   $('#startGame').click(function(){
     $('.gameBtn').show();
     $('#startGame').hide();
+    ga('send', 'event', 'controls', 'start')
     $('#timer').html('0:'+TIME_ON_GAME);
-    shuffle(words);
+    shuffleMy(words);
+    shuffleMy(words);
     left_time = TIME_ON_GAME;
     history = [];
     timer = setInterval(decreateTime, 1000);
@@ -138,7 +163,9 @@ $(document).ready(function() {
 
 <div class="container-fluid">
   <div class="row" style="margin-top: 1em;">
+    
     <div id="timer" style="text-align: center; font-size: 2em;"></div>
+
   </div>
   <div class="between"> </div>
   <div class="row">
