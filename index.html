@@ -110,13 +110,13 @@ $(document).ready(function() {
 
   $('#yesBtn').click(function() {
     history.push({'word': words[index], 'type': 'ok'});
-    ga('send', 'event', 'play', 'yes-click', words[index], 1)
+    gtag('event', 'yes-click', {'word':words[index]})
     showWord();
   })
 
   $('#noBtn').click(function() {
     history.push({'word': words[index], 'type': 'no'});
-    ga('send', 'event', 'play', 'no-click', words[index], 0)
+    gtag('event', 'no-click', {'word': words[index]})
     showWord();
   })
 
@@ -134,7 +134,7 @@ $(document).ready(function() {
   $('#startGame').click(function(){
     $('.gameBtn').show();
     $('#startGame').hide();
-    ga('send', 'event', 'controls', 'start')
+    gtag('event', 'controls', {'type': 'start'})
     $('#timer').html('0:'+TIME_ON_GAME);
     shuffleMy(words);
     shuffleMy(words);
