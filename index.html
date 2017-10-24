@@ -18,15 +18,6 @@
 
   <title>Alias</title>
   <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-108461867-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-108461867-1');
-</script>
-
 
 </head>
 <style type="text/css">
@@ -95,9 +86,12 @@ $(document).ready(function() {
 
   function decreateTime() {
     left_time -= 1;
-    $('#timer').html('0:'+ left_time);
+    minutes = Math.floor(left_time / 60);
+    seconds = left_time % 60;
+    $('#timer').html(minutes + ':'+ seconds);
     if (left_time <= 0) {
       clearTimeout(timer);
+      history.push({'word': words[index], 'type': 'no'});
       console.log(history);
       endGame();
     } 
@@ -110,13 +104,11 @@ $(document).ready(function() {
 
   $('#yesBtn').click(function() {
     history.push({'word': words[index], 'type': 'ok'});
-    gtag('event', 'yes-click', {'word':words[index]})
     showWord();
   })
 
   $('#noBtn').click(function() {
     history.push({'word': words[index], 'type': 'no'});
-    gtag('event', 'no-click', {'word': words[index]})
     showWord();
   })
 
@@ -134,7 +126,6 @@ $(document).ready(function() {
   $('#startGame').click(function(){
     $('.gameBtn').show();
     $('#startGame').hide();
-    gtag('event', 'controls', {'type': 'start'})
     $('#timer').html('0:'+TIME_ON_GAME);
     shuffleMy(words);
     shuffleMy(words);
