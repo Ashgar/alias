@@ -83,7 +83,7 @@ $(document).ready(function() {
     if (history.type == 'no') {
       var removeBtn = $('<div/>')
         .addClass('glyphicon glyphicon-trash col-xs-2')
-        .css('padding-top': '4px')
+        .css({'padding-top': '4px'})
         .attr('word', history.word)
         .click(function() {
           var word = $(this).attr('word')
