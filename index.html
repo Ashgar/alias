@@ -66,11 +66,37 @@ $(document).ready(function() {
 
   ]
   var history = []
-  var TIME_ON_GAME = 90;
+  var TIME_ON_GAME = 5;
   var state = "new"
   var left_time = 0;
   var timer = null;
   var index = -1;
+
+  function createRow(history) {
+    var result = $('<div/>')
+      .addClass(history.type)
+      .addClass('row')
+      .css({'margin': '7px 0px'})
+      .append($('<div/>').addClass('col-xs-1'));
+      
+    if (history.type == 'no') {
+      var removeBtn = $('<div/>')
+        .addClass('glyphicon glyphicon-trash col-xs-2')
+        .attr('word', history.word)
+        .click(function() {
+          var word = $(this).attr('word')
+          gtag('event', 'trash', {'word': word});
+        })
+      result
+        .append($('<div/>').addClass('col-xs-8').html(history.word))
+        .append(removeBtn)
+    } else {
+      result
+        .append($('<div/>').addClass('col-xs-10').html(history.word))
+    }
+    result.append($('<div/>').addClass('col-xs-1'));
+    return result;
+  }
 
   function endGame() {
     $('.gameBtn').hide();
@@ -82,7 +108,11 @@ $(document).ready(function() {
         .html(history[i].word)
         .addClass(history[i].type);
       console.log(history[i].word);
-      $('#history').append('<div class="'+history[i].type+'"> ' + history[i].word + '</div>');
+      remove = ''
+      if (history[i].type == 'no') {
+        remove = '<span '
+      }
+      $('#history').append(createRow(history[i]));
     }
   }
 
