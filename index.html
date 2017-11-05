@@ -74,6 +74,7 @@ $(document).ready(function() {
 
   function createRow(history) {
     var result = $('<div/>')
+      .attr('id', 'row_'+history.word)
       .addClass(history.type)
       .addClass('row')
       .css({'margin': '7px 0px'})
@@ -82,9 +83,11 @@ $(document).ready(function() {
     if (history.type == 'no') {
       var removeBtn = $('<div/>')
         .addClass('glyphicon glyphicon-trash col-xs-2')
+        .css('padding-top': '4px')
         .attr('word', history.word)
         .click(function() {
           var word = $(this).attr('word')
+          $('#row_'+word).css({'background-color': 'pink'})
           gtag('event', 'trash', {'word': word});
         })
       result
