@@ -96,14 +96,23 @@ $(document).ready(function() {
     }
   }
 
-  function decreateTime() {
-    left_time -= 1;
+  function getTime() {
     minutes = Math.floor(left_time / 60);
     seconds = left_time % 60;
-    $('#timer').html(minutes + ':'+ seconds);
+    extra = '';
+    if (seconds < 10) {
+      extra = '0';
+    }
+    return minutes + ':' + extra + seconds;
+  }
+
+  function decreateTime() {
+    left_time -= 1;
+    $('#timer').html(getTime);
     if (left_time <= 0) {
       clearTimeout(timer);
       history.push({'word': words[index], 'type': 'no'});
+      gtag('event', 'time-btn', {'word': words[index]})
       console.log(history);
       endGame();
     } 
@@ -116,11 +125,13 @@ $(document).ready(function() {
 
   $('#yesBtn').click(function() {
     history.push({'word': words[index], 'type': 'ok'});
+    gtag('event', 'yes-btn', {'word': words[index]})
     showWord();
   })
 
   $('#noBtn').click(function() {
     history.push({'word': words[index], 'type': 'no'});
+    gtag('event', 'no-btn', {'word': words[index]})
     showWord();
   })
 
