@@ -72,9 +72,17 @@ $(document).ready(function() {
   var timer = null;
   var index = -1;
 
+  function genHash(word) {
+    val = 0;
+    for(var i = 0; i < word.length; ++i) {
+      val = (val * 1709 + word.charCodeAt(i) )% 39989;
+    }
+    return val;
+  }
+
   function createRow(history) {
     var result = $('<div/>')
-      .attr('id', 'row_'+history.word)
+      .attr('id', 'row_'+genHash(history.word))
       .addClass(history.type)
       .addClass('row')
       .css({'margin': '7px 0px'})
@@ -87,7 +95,7 @@ $(document).ready(function() {
         .attr('word', history.word)
         .click(function() {
           var word = $(this).attr('word')
-          $('#row_'+word).css({'background-color': 'pink'})
+          $('#row_'+genHash(word)).css({'background-color': 'pink'})
           gtag('event', 'trash-btn', {'event_label': word});
         })
       result
