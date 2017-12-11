@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:url"           content="https://ashgar.github.io/alias" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="Lear words" />
+  <meta property="og:description"   content="It's time to learn those words." />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <title>Alias</title>
+<!-- Global Site Tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-108461867-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-108461867-1');
+</script>
+<style type="text/css">
+  .ch-type {
+    cursor: pointer;
+  }
+
+  .selected {
+    font-weight: bold;
+  }
+
+  #word {
+    font-weight: bolder;
+    text-align: center;
+    font-size: 1.5em;
+  }
+
+  .result {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 1.3em;
+  }
+
+  .choice-row {
+    margin: 10px 0px;
+  }
+</style>
+<script type="text/javascript">
+  $(document).ready(function() {
+    function shuffleMy(a) {
+        var j, x, i;
+        for (i = a.length - 1; i > 0; i--) {
+            j = Math.floor(Math.random() * (i + 1));
+            x = a[i];
+            a[i] = a[j];
+            a[j] = x;
+        }
+    }
+
+    data = [
+  {
+    "eng": "upbringing",
+    "ukr": "виховання",
+    "count": 1
+  },
+  {
+    "eng": "resilience",
+    "ukr": "стійкість",
+    "count": 1
+  },
+  {
+    "eng": "tatty",
+    "ukr": "жалюгідний, потрьопаний",
+    "count": 1
+  },
+  {
+    "eng": "sartorial",
+    "ukr": "кравець",
+    "count": 1
+  },
+  {
+    "eng": "mediocrity",
+    "ukr": "посередність",
+    "count": 1
+  },
+  {
+    "eng": "ruthlessness",
+    "ukr": "нещадність",
+    "count": 1
+  },
+  {
+    "eng": "jaded",
+    "ukr": "виснажений",
+    "count": 1
+  },
+  {
+    "eng": "notorious",
+    "ukr": "горезвісний",
+    "count": 1
+  },
+  {
+    "eng": "bland",
+    "ukr": "м'який, ввічливий",
+    "count": 1
+  },
+  {
+    "eng": "exposure",
+    "ukr": "ризик, незахищеність",
+    "count": 1
+  },
+  {
+    "eng": "savage",
+    "ukr": "дикун",
+    "count": 1
+  },
+  {
+    "eng": "backstage",
+    "ukr": "за кулісами",
+    "count": 1
+  },
+  {
+    "eng": "setback",
+    "ukr": "невдача, регрес",
+    "count": 1
+  },
+  {
+    "eng": "lucrative",
+    "ukr": "прибутковий, вигідний",
+    "count": 1
+  },
+  {
+    "eng": "viable",
+    "ukr": "життєздатний",
+    "count": 1
+  }
+]
+  var type = 'eng-ukr';
+  var game = Array()
+  var current = 0
+
+    $('.ch-type').click(function(){
+      var elem = $(this);
+      $('.ch-type').removeClass('selected')
+      elem.addClass('selected');
+      type = elem.attr('id');
+      showWord();
+    })
+
+    function getWord(ind) {
+      if (type == 'eng-ukr') {
+        return data[ind]['eng']
+      } else {
+        return data[ind]['ukr']
+      }
+    }
+
+    function getTranslation(ind) {
+      if (type == 'eng-ukr') {
+        return data[ind]['ukr']
+      } else {
+        return data[ind]['eng']
+      }
+    }
+
+    function showWord() {
+      var a = Array();
+      $('.result').hide();
+      for(var i=0; i<data.length; ++i) {
+        a.push(i);
+      }
+      shuffleMy(a);
+      game = Array()
+      for(i = 0; i<4; ++i) {
+        game.push(a[i])
+      }
+      current = a[0]
+      $('#word').html(getWord(a[0]))
+      shuffleMy(game);
+      for(var i=0; i<4; ++i) {
+        $('.choice[ind='+i+']').html(getTranslation(game[i]))
+      }
+    }
+
+    $('.choice').click(function(){
+      $('.result.ok').hide()
+      $('.result.no').hide()
+      val = game[parseInt($(this).attr('ind'))]
+      if (current == val) {
+        $('.result.ok').show()
+      } else {
+        $('.result.no').show()
+      }
+    })
+
+    $('.result').click(function(){
+      showWord();
+    }) 
+    showWord();
+  })
+</script>
+</head>
+<body>
+  
+<div class="container-fluid">
+  <div class="row">
+    
+    <div class="col-xs-4 ch-type" id="ukr-eng">UA to ENG</div>
+    <div class="col-xs-4"> </div>
+    <div class="col-xs-4 ch-type selected" id="eng-ukr"> ENG to UA </div>
+
+  </div>
+  <div class="row">
+    <div class="col-xs-2"></div>
+    <div class="col-xs-8" id="word">word</div>
+    <div class="col-xs-2"></div>
+  </div>
+  <div class="row">
+    <div class="col-xs-1"></div>
+    <div id="correct" class="col-xs-10 result ok" style="display: none; color: green;"> &gt; &gt; correct &gt; &gt; </div>
+    <div id="fail" class="col-xs-10 result no"  style="display: none; color: red;"> &gt; &gt; fail &gt; &gt; </div>
+    <div class="col-xs-1"></div>
+  </div>
+  <div class="row choice-row">
+    <div class="col-xs-12">
+      <button type="button" style="width: 100%" ind=0 class="btn btn-default choice" >Start</button>
+    </div>
+  </div>
+  <div class="row choice-row">
+    <div class="col-xs-12">
+      <button type="button" style="width: 100%" ind=1 class="btn btn-default choice" >Start</button>
+    </div>
+  </div>
+  <div class="row choice-row">
+    <div class="col-xs-12">
+      <button type="button" style="width: 100%" ind=2 class="btn btn-default choice" >Start</button>
+    </div>
+  </div>
+  <div class="row choice-row">
+    <div class="col-xs-12">
+      <button type="button" style="width: 100%" ind=3 class="btn btn-default choice" >Start</button>
+    </div>
+  </div>
+</div>
+</body>
