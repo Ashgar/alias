@@ -396,6 +396,7 @@
       index = parseInt($(this).attr('ind'))
       val = game[index]
       if (current == val) {
+        gtag('event', 'ok-btn', {'event_label': data[index]['eng']})
         $('.result.ok').show()
       } else {
         gtag('event', 'fail-btn', {'event_label': data[index]['eng']})
