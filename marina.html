@@ -135,17 +135,17 @@
             index = parseInt($(this).attr('ind'))
             val = game[index]
             if (current == val) {
-              gtag('event', 'ok-btn', {'event_label': data[index]['eng']})
+              gtag('event', 'ok-btn-new', {'event_label': data[val]['eng']})
               $('.result.ok').show()
             } else {
-              gtag('event', 'fail-btn', {'event_label': data[index]['eng']})
+              gtag('event', 'fail-btn-new', {'event_label': data[val]['eng']})
               $('.result.no').show()
             }
           })
 
           $('#level').change(function(){
             level = $('#level').val();
-            gtag('event', 'change-level', {'level': level})
+            gtag('event', 'change-level-new', {'level': level})
             showWord();
           })
 
