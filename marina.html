@@ -145,7 +145,7 @@
 
           $('#level').change(function(){
             level = $('#level').val();
-            gtag('event', 'change-level-new', {'level': level})
+            gtag('event', 'change-level-new', {'event_label': level})
             showWord();
           })
 
